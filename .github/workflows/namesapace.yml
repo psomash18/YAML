@@ -18,7 +18,7 @@ jobs:
         run: |
           az login --username $AZURE_USERNAME --password $AZURE_PASSWORD
           az servicebus namespace create \
-            --resource-group AZCloudDeveloper \
+            --resource-group powerautomat \
             --name TESTServiceBusNamespace \
             --location eastus
   
