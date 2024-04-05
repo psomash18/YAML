@@ -14,12 +14,14 @@ jobs:
         uses: actions/checkout@v2
 
       - name: Login to Azure
+        shell: pwsh
         run: |
           $azurePassword = ConvertTo-SecureString "Kranti@2024" -AsPlainText -Force
           $azureCredential = New-Object System.Management.Automation.PSCredential("pradeep.somas@hcl.com", $azurePassword)
           Connect-AzAccount -Credential $azureCredential -TenantId "189de737-c93a-4f5a-8b68-6f4ca9941912"
 
       - name: Create Service Bus Namespace
+        shell: pwsh
         run: |
           $resourceGroupName = "powerautomat"
           $namespaceName = "TestNamespace"
