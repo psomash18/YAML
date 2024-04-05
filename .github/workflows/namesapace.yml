@@ -12,12 +12,7 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-
-      - name: Set up Azure CLI
-        uses: azure/setup-azure-cli@v1
-        with:
-          azcliversion: 'latest'
-
+    
       - name: Create Service Bus Namespace
         env:
           AZURE_USERNAME: ${{ secrets.AZURE_USERNAME }}
