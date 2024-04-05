@@ -8,11 +8,9 @@ on:
 jobs:
   create_namespace:
     runs-on: windows-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-    
       - name: Create Service Bus Namespace
         env:
           AZURE_USERNAME: ${{ secrets.AZURE_USERNAME }}
@@ -20,6 +18,6 @@ jobs:
         run: |
           az login --username $AZURE_USERNAME --password $AZURE_PASSWORD
           az servicebus namespace create \
-            --resource-group powerautomat \
-            --name MyServiceBusNamespace \
+            --resource-group AZCloudDeveloper \
+            --name TESTServiceBusNamespace \
             --location eastus
