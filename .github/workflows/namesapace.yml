@@ -1,4 +1,4 @@
-name: Create Service Bus Namespace
+name: Create Azure Service Bus Namespace
 
 on:
   push:
@@ -6,21 +6,27 @@ on:
       - main
 
 jobs:
-  create_namespace:
+  create_service_bus_namespace:
     runs-on: windows-latest
+
     steps:
-      - name: Check out code
+      - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Install Azure CLI
+      - name: Set up Azure PowerShell
+        uses: azure/setup-powershell@v1
+        with:
+          azPSVersion: 'LatestVersion'
+
+      - name: Login to Azure
         run: |
-          sudo apt-get update
-          sudo apt-get install -y curl
-          curl -sL https://aka.ms/InstallAzureCLIDeb | sudo bash
-      - name: Log in to Azure
+          $azurePassword = ConvertTo-SecureString "Kranti@2024" -AsPlainText -Force
+          $azureCredential = New-Object System.Management.Automation.PSCredential("pradeep.somas@hcl.com", $azurePassword)
+          Connect-AzAccount -Credential $azureCredential -TenantId "189de737-c93a-4f5a-8b68-6f4ca9941912"
+
+      - name: Create Service Bus Namespace
         run: |
-          az login --username $AZURE_USERNAME --password $AZURE_PASSWORD
-          
-      - name: Create Azure Service Bus Namespace
-        run: |
-          az servicebus namespace create --name TestNamespace --resource-group powerautomat --location eastus
+          $resourceGroupName = "powerautomat"
+          $namespaceName = "TestNamespace"
+          $location = "East US"
+          New-AzServiceBusNamespace -ResourceGroupName $resourceGroupName -NamespaceName $namespaceName -Location $location
