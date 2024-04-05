@@ -13,11 +13,6 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      - name: Set up Azure PowerShell
-        uses:  actions/setup-pwsh@v2
-        with:
-          azPSVersion: 'LatestVersion'
-
       - name: Login to Azure
         run: |
           $azurePassword = ConvertTo-SecureString "Kranti@2024" -AsPlainText -Force
